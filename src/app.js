@@ -15,6 +15,8 @@ function updateWeather(response) {
   desc_elt.innerHTML = response.data.condition.description;
   humidity_elt.innerHTML = `${response.data.temperature.humidity}%`;
   windspeed_elt.innerHTML = `${Math.round(response.data.wind.speed)}km/hr`;
+
+  get_forecast(response.data.city);
 }
 
 function dateFormat(date) {
@@ -67,7 +69,13 @@ function search(event) {
 let form_elt = document.querySelector("#search-form");
 form_elt.addEventListener("submit", search);
 
-function forecast() {
+function get_forecast(city) {
+  let apiKey = `893fc75a240abbc6oc34eddd57f08bta`;
+  let url = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
+  axios.get(url).then(forecast);
+}
+
+function forecast(response) {
   let days = ["Mon", "Tue", "Wed", "Thu", "Fri"];
   let forecastHtml = "";
   days.forEach(function (day) {
@@ -90,4 +98,5 @@ function forecast() {
 }
 
 searchCity("Addis Ababa");
-forecast();
+
+//forecast();
