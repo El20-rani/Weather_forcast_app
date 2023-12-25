@@ -12,8 +12,8 @@ a:hover {
 }
 
 .container {
-  background: #8ff1ee;
-  max-width: 500px;
+  background: #9cf1ef;
+  max-width: 700px;
   margin: 35px auto;
   box-shadow: 0 25px 45px rgba(88, 132, 135, 0.7);
   padding: 30px;
@@ -29,7 +29,7 @@ header {
   background-color: #fbffff;
   border: none;
   border-radius: 5px;
-  width: 380px;
+  width: 500px;
   padding: 10px 20px;
   font-size: 14px;
 }
@@ -38,7 +38,7 @@ header {
   background-color: #b906f085;
   border: none;
   border-radius: 5px;
-  width: 90px;
+  width: 172px;
   padding: 10px 20px;
   font-size: 16px;
   color: #fbffff;
@@ -110,6 +110,12 @@ main {
 
 .forecast-temp {
   font-size: 14px;
+  text-align: center;
+  margin-top: 5px;
+}
+
+.icon {
+  font-size: 35px;
   text-align: center;
 }
 
