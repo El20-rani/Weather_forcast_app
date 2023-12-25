@@ -8,7 +8,7 @@ function updateWeather(response) {
   let date = new Date(response.data.time * 1000);
   console.log(response.data);
   let icon = document.querySelector("#icon");
-  icon.innerHTML = `<img src="${response.data.condition.icon_url}" class="icon">`;
+  icon.innerHTML = `<img src="${response.data.condition.icon_url}" class="forecast-icon">`;
   city_elt.innerHTML = response.data.city;
   time_elt.innerHTML = dateFormat(date);
   temperature.innerHTML = Math.round(response.data.temperature.current);
@@ -69,29 +69,39 @@ function search(event) {
 let form_elt = document.querySelector("#search-form");
 form_elt.addEventListener("submit", search);
 
+function dayFormat(time) {
+  let date = new Date(time * 1000);
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  return days[date.getDay()];
+}
+
 function get_forecast(city) {
   let apiKey = `893fc75a240abbc6oc34eddd57f08bta`;
   let url = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
-  axios.get(url).then(forecast);
+  axios(url).then(forecast);
 }
 
 function forecast(response) {
-  let days = ["Mon", "Tue", "Wed", "Thu", "Fri"];
   let forecastHtml = "";
-  days.forEach(function (day) {
-    let forecast = document.querySelector("#forescast");
-    forecastHtml += `
+  response.data.daily.forEach(function (day, index) {
+    if (index <= 4) {
+      let forecast = document.querySelector("#forescast");
+      forecastHtml += `
     <div class="forecast-day">
-      <div class="forecast-date">${day}</div>
-        <div class="icon">🌥️</div>
+      <div class="forecast-date">${dayFormat(day.time)}</div>
+        <div><img src ="${day.condition.icon_url}"class="forecast-icon"></div>
           <div class="forecast-temp">
             <span class="max-temp">
-              <strong>12°</strong>
+              <strong>${Math.round(day.temperature.maximum)}°</strong>
             </span>
-            <span class="min-temp">10°</span>
+            <span class="min-temp">${Math.round(
+              day.temperature.minimum
+            )}°</span>
       </div>
     </div>
  `;
+    }
   });
   let forecast = document.querySelector("#forecast");
   forecast.innerHTML = forecastHtml;
